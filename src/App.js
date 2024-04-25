@@ -10,6 +10,7 @@ function TodoApp() {
   const [date, setDate] = useState(new Date());
   const [editIndex, setEditIndex] = useState(null);
   const [editValue, setEditValue] = useState('');
+  const [editDate, setEditDate] = useState(new Date());
 
   const handleChange = (e) => {
     setTask(e.target.value);
@@ -43,48 +44,81 @@ function TodoApp() {
   const handleEdit = (index) => {
     setEditIndex(index);
     setEditValue(todos[index].task);
+    setEditDate(new Date(todos[index].date));
   };
 
-  const handleEditChange = (e) => {
-    setEditValue(e.target.value);
+  const handleEditChange = (e, type) => {
+    if (type === 'task') {
+      setEditValue(e.target.value);
+    } else if (type === 'date') {
+      setEditDate(e);
+    }
   };
 
   const handleEditSubmit = (index) => {
     const newTodos = [...todos];
     newTodos[index].task = editValue;
+    newTodos[index].date = new Date(editDate); // Convert to Date object
     setTodos(newTodos);
     setEditIndex(null);
     setEditValue('');
+    setEditDate(new Date());
   };
+
 
   return (
     <div className="todo-app">
       <h1>To-Do List</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={task}
-          onChange={handleChange}
-          placeholder="Enter a new to-do item"
-        />
-        <DatePicker
-          selected={date}
-          onChange={handleDateChange}
-          minDate={new Date()}
-          dateFormat="dd/MM/yyyy"
-        />
-        <button type="submit">Add</button>
+        <div className="form-group">
+          <label htmlFor="task" className="label">Task:</label>
+          <input
+            type="text"
+            id="task"
+            value={task}
+            onChange={handleChange}
+            placeholder="Enter a new to-do item"
+            className="input"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="date" className="label">Date:</label>
+          <DatePicker
+            id="date"
+            selected={date}
+            onChange={handleDateChange}
+            minDate={new Date()}
+            dateFormat="dd/MM/yyyy"
+            className="input"
+            required
+          />
+        </div>
+        <button type="submit" className="button">Add</button>
       </form>
+
       <ul>
         {todos.map((todo, index) => (
           <li key={index}>
             {editIndex === index ? (
               <form onSubmit={() => handleEditSubmit(index)}>
+                <div className="form-group">
+                <label htmlFor="task" className="label">Task:</label>
                 <input
                   type="text"
                   value={editValue}
-                  onChange={handleEditChange}
+                  onChange={(e) => handleEditChange(e, 'task')}
                 />
+                </div>
+                <div className="form-group">
+                <label htmlFor="date" className="label">Date:</label>
+                <DatePicker
+                  selected={editDate}
+                  onChange={(date) => handleEditChange(date, 'date')}
+                  minDate={new Date()}
+                  dateFormat="dd/MM/yyyy"
+                />
+                </div>
                 <button type="submit">Save</button>
               </form>
             ) : (

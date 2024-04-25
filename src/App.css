@@ -7,7 +7,12 @@
 }
 
 h1 {
-  text-align: center;
+  text-align: center; /* Align the text to the center */
+  margin-bottom: 20px; /* Add some space below the title */
+  font-size: 24px; /* Set the font size */
+  color: #333; /* Set the text color */
+  background-color: #f0f0f0; /* Set the background color */
+  padding: 10px; /* Add some padding around the text */
 }
 
 form {
@@ -50,4 +55,37 @@ input[type="checkbox"] {
 .completed {
   text-decoration: line-through;
   color: #888;
+}
+
+.form-group {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  display: inline-block;
+  width: 80px; /* Adjust the width as needed */
+  margin-right: 10px;
+}
+
+
+.input {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
 }
